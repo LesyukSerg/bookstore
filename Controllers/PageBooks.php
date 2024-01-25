@@ -12,11 +12,19 @@
         protected int $page = 1;
         protected int $items_on_page = 8;
 
+        private array $types = [
+            'year' => 'published_year',
+            'name' => 'title'
+        ];
+        private array $orders = ['asc', 'desc'];
+
         public function show()
         {
             $books_obj = new Books();
 
-            $books_list = $books_obj->getList($this->items_on_page, $this->page, 'title');
+            $type = $this->getType();
+            $order = $this->getOrder();
+            $books_list = $books_obj->getList($this->items_on_page, $this->page, $type, $order);
 
             foreach ($books_list as $id => $book) {
                 $genres = $authors = [];
@@ -39,8 +47,21 @@
             require view . '/books.php';
         }
 
-        public function getAuthorsList($books_list)
+        public function getType(): string
         {
+            if (isset($_GET['type']) && isset($this->types[$_GET['type']])) {
+                return $this->types[$_GET['type']];
+            }
 
+            return 'title';
+        }
+
+        public function getOrder(): string
+        {
+            if (isset($_GET['order']) && in_array($_GET['order'], $this->orders)) {
+                return $_GET['order'];
+            }
+
+            return 'asc';
         }
     }

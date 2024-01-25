@@ -10,12 +10,17 @@
         <a href="/book.php" class="btn btn-success mb-3 float-end">Add Book</a>
         <h2><?= $title ?></h2>
         <hr>
+
+        <div class="row">
+            <?php require view . 'sort.php'; ?>
+        </div>
+
         <div class="card-deck pb-5">
             <?php
                 foreach ($books_list as $book) {
                     echo '<div class="card mb-2">
                                 <div class="card-body">
-                                    <h5 class="card-title"><strong>Name: </strong>' . Utils::htmlEscape($book['title']) . '</h5>
+                                    <h5 class="card-title"><strong>Title: </strong>' . Utils::htmlEscape($book['title']) . '</h5>
                                     <p class="card-text"><strong>Author: </strong>' . Utils::htmlEscape(implode(", ", $book['authors'])) . '</p>
                                     <p class="card-text"><strong>Published year: </strong> ' . Utils::htmlEscape($book['published_year']) . '</p>
                                     <p class="card-text"><strong>Genre: </strong> ' . Utils::htmlEscape($book['genre']) . '</p>                                    

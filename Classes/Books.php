@@ -8,8 +8,9 @@
         protected string $table = 'books';
         protected string $key = 'id';
 
-        public function getList($count = 10, $page = 1, $order_by = 'name'): array
+        public function getList($count = 10, $page = 1, $order_by = 'name', $direction = 'ASC'): array
         {
+
             $genres_obj = new Genres();
             $authors_obj = new Authors();
 
@@ -18,7 +19,7 @@
             $sql = "SELECT b.*, g.name genre FROM books b
                         LEFT JOIN genres g ON g.id = b.genre_id
                         GROUP BY b.title
-                        ORDER BY $order_by 
+                        ORDER BY $order_by $direction
                         LIMIT $count OFFSET " . ($page * $count);
 
             $data = $this->db->fetchAll($sql);
