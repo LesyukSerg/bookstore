@@ -2,6 +2,8 @@
 
     namespace Controllers;
 
+    use Classes\Authorization;
+
 
     abstract class Page
     {
@@ -12,6 +14,7 @@
 
         public function __construct()
         {
+            new Authorization();
             $this->page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
             $this->show();
         }

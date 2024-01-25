@@ -9,7 +9,7 @@
 
             </li>
             <li class="nav-item mx-2">
-                <a class="nav-link" href="/login.php?out=1">Exit</a>
+                <a class="nav-link" href="/View/login.php?out=1">Exit</a>
             </li>
         </ul>
     </div>
