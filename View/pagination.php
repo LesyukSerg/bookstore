@@ -1,5 +1,5 @@
 <?php if (isset($nav) && $nav > 1): ?>
-    <nav class="navbar fixed-bottom navbar-light bg-light">
+    <nav class="navbar fixed-bottom navbar-light bg-light mt-4">
         <ul class="pagination mx-auto">
             <?php
                 for ($p = 1; $p <= $nav; $p++) {

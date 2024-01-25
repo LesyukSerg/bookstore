@@ -18,13 +18,14 @@
 
             $books_list = $books_obj->getList($this->items_on_page, $this->page, 'title');
 
-            foreach ($books_list as &$book) {
+            foreach ($books_list as $id => $book) {
                 $genres = $authors = [];
                 foreach ($book['authors'] as $one) $authors[] = $one['name'];
                 foreach ($book['genres'] as $one) $genres[] = $one['name'];
 
                 $book['authors'] = $authors;
                 $book['genres'] = $genres;
+                $books_list[$id] = $book;
             }
 
             $count = $books_obj->count();
