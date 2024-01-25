@@ -51,7 +51,8 @@ functionality, maintaining high security standards.
    subqueries for complex data retrieval.
    * Integrate third-party book APIs to fetch additional book details.
    * Implement a user dashboard for managing personal book collections and reviews.
-   Submission:
+
+######Submission:
    Please submit your code in a ZIP archive or provide a GitHub repository link with your project.
    Ensure that all components, including the database schema, PHP files, front-end code, and
    documentation, are included in your submission.

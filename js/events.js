@@ -23,7 +23,7 @@ function dellItem(btn, url) {
 }
 
 $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('.selectpicker').selectpicker();
 
     $('.del-book').on('click', function () {
         if (window.confirm("Are you sure?")) {

@@ -19,19 +19,23 @@
             <input type="text" class="form-control" id="published_year" name="published_year" placeholder="enter published year" value="<?= Utils::htmlEscape($book['published_year']) ?>" required>
         </div>
 
-        <div class="form-group">
-            <label for="author_id"><code>*</code>Author:</label>
-            <select class="form-control" id="author_id" name="author_id[]" required multiple>
-                <?php
-                    foreach ($authors as $one) {
-                        echo '<option value="' . $one['id'] . '" ' . (isset($book['authors'][$one['id']]) ? 'selected' : '') . ' >' . Utils::htmlEscape($one['name']) . '</option>';
-                    }
-                ?>
-            </select>
+        <div class="form-group row">
+            <div class="col-xs-12">
+                <label for="author_id"><code>*</code>Authors:</label>
+            </div>
+            <div class="col-xs-12">
+                <select class="selectpicker form-control" multiple data-live-search="true" id="author_id" name="author_id[]" required>
+                    <?php
+                        foreach ($authors as $one) {
+                            echo '<option value="' . $one['id'] . '" ' . (isset($book['authors'][$one['id']]) ? 'selected' : '') . ' >' . Utils::htmlEscape($one['name']) . '</option>';
+                        }
+                    ?>
+                </select>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="genre_id"><code>*</code>Genre:</label>
+            <label for="genre_id"><code>*</code>Main genre:</label>
             <select class="form-control" id="genre_id" name="genre_id" required>
                 <?php
                     foreach ($genres as $one) {
@@ -43,8 +47,7 @@
 
         <div class="form-group">
             <label for="other_genre_id">Other genres:</label>
-            <select class="form-control" id="other_genre_id" name="other_genre_id[]" multiple>
-                <option></option>
+            <select class="selectpicker form-control" data-live-search="true" id="other_genre_id" name="other_genre_id[]" multiple>
                 <?php
                     foreach ($genres as $one) {
                         echo '<option value="' . $one['id'] . '" ' . (isset($book['genres'][$one['id']]) ? 'selected' : '') . ' >' . Utils::htmlEscape($one['name']) . '</option>';
