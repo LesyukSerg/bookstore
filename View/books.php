@@ -29,7 +29,7 @@
                                             <h5 class="card-title"><strong>Title: </strong>' . Utils::htmlEscape($book['title']) . '</h5>
                                             <p class="card-text"><strong>Author: </strong>' . Utils::htmlEscape(implode(", ", $book['authors'])) . '</p>
                                             <p class="card-text"><strong>Published year: </strong> ' . Utils::htmlEscape($book['published_year']) . '</p>
-                                            <p class="card-text"><strong>Genre: </strong> ' . implode(', ', $book['genres']) . '</p>                                    
+                                            <p class="card-text"><strong>Genre: </strong> ' . Utils::htmlEscape(implode(', ', $book['genres'])) . '</p>                                    
                                         </div>
                                         <div class="card-footer text-muted">
                                             <button class="btn btn-sm ms-2 btn-danger float-end del-book" data-id="' . $book['id'] . '">Delete</button>
