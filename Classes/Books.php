@@ -31,4 +31,82 @@
 
             return $items;
         }
+
+        public function edit($id, $data): bool
+        {
+            if ($this->delAuthors($id)) {
+                $this->setAuthors($id, $data['authors']);
+            }
+
+            if ($this->delGenres($id)) {
+                $this->setGenres($id, $data['other_genre_id']);
+            }
+
+            unset($data['authors'], $data['other_genre_id']);
+            parent::edit($id, $data);
+
+            return 1;
+        }
+
+        private function delAuthors($id): bool
+        {
+            if ($id) {
+                $sql = "DELETE FROM books_authors WHERE `book_id` = $id";
+
+                return $this->db->query($sql);
+            }
+
+            return false;
+        }
+
+        private function setAuthors($book_id, $authors): bool
+        {
+            if ($book_id) {
+                $values = [];
+
+                foreach ($authors as $author_id) {
+                    $author_id = (int)$author_id;
+                    $values[] = "($book_id, $author_id)";
+                }
+
+                if (count($values)) {
+                    $sql = "INSERT INTO books_authors (book_id, author_id) VALUES " . implode(',', $values);
+                    return $this->db->query($sql);
+                }
+            }
+
+            return false;
+        }
+
+        private function delGenres($id): bool
+        {
+            if ($id) {
+                $sql = "DELETE FROM books_genres WHERE `book_id` = $id";
+
+                return $this->db->query($sql);
+            }
+
+            return false;
+        }
+
+        private function setGenres($book_id, $genres): bool
+        {
+            if ($book_id) {
+                $values = [];
+
+                foreach ($genres as $genre_id) {
+                    if ($genre_id) {
+                        $genre_id = (int)$genre_id;
+                        $values[] = "($book_id, $genre_id)";
+                    }
+                }
+
+                if (count($values)) {
+                    $sql = "INSERT INTO books_genres (book_id, genre_id) VALUES " . implode(',', $values);
+                    return $this->db->query($sql);
+                }
+            }
+
+            return false;
+        }
     }

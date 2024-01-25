@@ -11,8 +11,8 @@
 
     <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
         <div class="form-group">
-            <label for="name"><code>*</code>Title:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="enter book title" value="<?= Utils::htmlEscape($book['title']) ?>" required>
+            <label for="title"><code>*</code>Title:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="enter book title" value="<?= Utils::htmlEscape($book['title']) ?>" required>
         </div>
         <div class="form-group">
             <label for="name"><code>*</code>Published year:</label>
@@ -20,8 +20,8 @@
         </div>
 
         <div class="form-group">
-            <label for="genre_id"><code>*</code>Authors:</label>
-            <select class="form-control" id="genre_id" name="genre_id" required multiple>
+            <label for="author_id"><code>*</code>Author:</label>
+            <select class="form-control" id="author_id" name="author_id[]" required multiple>
                 <?php
                     foreach ($authors as $one) {
                         echo '<option value="' . $one['id'] . '" ' . (isset($book['authors'][$one['id']]) ? 'selected' : '') . ' >' . Utils::htmlEscape($one['name']) . '</option>';
@@ -42,8 +42,9 @@
         </div>
 
         <div class="form-group">
-            <label for="genre_id">Other genres:</label>
-            <select class="form-control" id="genre_id" name="genre_id" multiple>
+            <label for="other_genre_id">Other genres:</label>
+            <select class="form-control" id="other_genre_id" name="other_genre_id[]" multiple>
+                <option></option>
                 <?php
                     foreach ($genres as $one) {
                         echo '<option value="' . $one['id'] . '" ' . (isset($book['genres'][$one['id']]) ? 'selected' : '') . ' >' . Utils::htmlEscape($one['name']) . '</option>';

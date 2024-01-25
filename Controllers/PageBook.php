@@ -22,14 +22,15 @@
             if ($_POST) {
                 if ($id) {
                     $updated = $book_obj->edit($id, [
-                        'title'          => (int)$_POST['title'],
+                        'title'          => $_POST['title'],
                         'published_year' => $_POST['published_year'],
+                        'authors'        => $_POST['author_id'],
                         'genre_id'       => $_POST['genre_id'],
-
+                        'other_genre_id' => $_POST['other_genre_id']
                     ]);
                 } else {
                     $added = $book_obj->add([
-                        'title'          => (int)$_POST['title'],
+                        'title'          => $_POST['title'],
                         'published_year' => $_POST['published_year'],
                         'genre_id'       => $_POST['genre_id'],
                     ]);
