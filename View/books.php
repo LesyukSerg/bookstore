@@ -6,7 +6,9 @@
     require view . 'menu.php';
 ?>
     <div class="container mt-5">
+        <a href="/book.php" class="btn btn-success mb-3 float-end">Add Book</a>
         <h2><?= $title ?></h2>
+        <hr>
         <div class="card-deck">
             <?php
                 foreach ($books_list as $book) {
@@ -15,6 +17,8 @@
                                     <h5 class="card-title"><strong>Name: </strong>' . Utils::htmlEscape($book['title']) . '</h5>
                                     <p class="card-text"><strong>Published year: </strong> ' . Utils::htmlEscape($book['published_year']) . '</p>
                                     <p class="card-text"><strong>Genre: </strong> ' . Utils::htmlEscape($book['genre']) . '</p>
+                                    <button class="btn btn-sm ms-2 btn-danger float-end del-book" data-id="' . $book['id'] . '">Delete</button>
+                                    <a class="btn btn-sm btn-primary float-end" href="/book.php?id=' . $book['id'] . '">Edit</a>
                                 </div>
                             </div>
           ';
@@ -22,8 +26,6 @@
             ?>
         </div>
         <?php require view . 'pagination.php' ?>
-
-        <a href="/book.php" class="btn btn-success mt-3">Add Book</a>
     </div>
 
 <?php require view . 'footer.php' ?>
