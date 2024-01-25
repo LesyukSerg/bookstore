@@ -22,11 +22,7 @@
 
         public function show()
         {
-            if ($_POST) {
-                $_SESSION['selected']['genres'] = $_POST['genres'];
-                $_SESSION['selected']['authors'] = $_POST['authors'];
-                $_SESSION['selected']['years'] = $_POST['years'];
-            }
+            $this->saveFilterSelection();
 
             $books_obj = new Books();
             $genres_obj = new Genres();
@@ -65,6 +61,19 @@
             ];
 
             require view . '/books.php';
+        }
+
+        private function saveFilterSelection()
+        {
+            if ($_POST) {
+                if (isset($_POST['reset'])) {
+                    unset($_SESSION['selected']);
+                } else {
+                    $_SESSION['selected']['genres'] = $_POST['genres'];
+                    $_SESSION['selected']['authors'] = $_POST['authors'];
+                    $_SESSION['selected']['years'] = $_POST['years'];
+                }
+            }
         }
 
         public function getType(): string

@@ -6,8 +6,7 @@
                 <label for="yearFilter">Рік видання:</label>
                 <?php
                     foreach ($years as $one) {
-                        echo '
-                        <div class="custom-control custom-checkbox">
+                        echo '<div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="years['.$one['year'].']" value="'.$one['year'].'" id="genre'.$one['year'].'"
                                 '.(isset($selected['years'][$one['year']]) ? 'checked=checked' : '').'
                             >
@@ -21,8 +20,7 @@
                 <h5>Genres:</h5>
                 <?php
                     foreach ($genres as $one) {
-                        echo '
-                        <div class="custom-control custom-checkbox">
+                        echo '<div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="genres['.$one['id'].']" value="'.$one['id'].'" id="genre'.$one['id'].'"
                                 '.(isset($selected['genres'][$one['id']]) ? 'checked=checked' : '').'
                             >
@@ -35,8 +33,7 @@
                 <h5>Authors:</h5>
                 <?php
                     foreach ($authors as $one) {
-                        echo '
-                        <div class="custom-control custom-checkbox">
+                        echo '<div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="authors['.$one['id'].']" value="'.$one['id'].'" id="author'.$one['id'].'"
                             '.(isset($selected['authors'][$one['id']]) ? 'checked=checked' : '').'
                             >
@@ -47,6 +44,7 @@
             </div>
 
             <div class="form-group mt-2">
+                <button type="submit" name="reset" value="1" class="btn btn-secondary">Reset</button>
                 <button type="submit" class="btn btn-primary">Apply Filter</button>
             </div>
         </form>
