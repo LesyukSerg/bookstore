@@ -10,6 +10,8 @@
 
     class PageBook extends Page
     {
+        protected string $page_name = 'book';
+
         public function show()
         {
             $book_obj = new Books();
@@ -18,6 +20,7 @@
 
             $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             $title = $id ? 'Edit Book' : 'Add Book';
+            $page_name = $this->page_name;
 
             if ($_POST) {
                 if ($id) {

@@ -7,11 +7,14 @@
 
     class PageGenre extends Page
     {
+        protected string $page_name = 'genre';
+
         public function show()
         {
             $obj = new Genres();
             $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             $title = $id ? "Edit Genre" : "Add Genre";
+            $page_name = $this->page_name;
 
             if ($_POST) {
                 if ($id) {

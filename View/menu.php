@@ -6,13 +6,13 @@
                 <a class="nav-link <?=($page_name=='books'?'active':'')?>" href="/index.php">Books</a>
             </li>
             <li class="nav-item mx-2">
-                <a class="nav-link" href="/genre.php">Add genre</a>
+                <a class="nav-link <?=($page_name=='genre'?'active':'')?>" href="/genre.php">Add genre</a>
             </li>
             <li class="nav-item mx-2">
-                <a class="nav-link" href="/author.php">Add author</a>
+                <a class="nav-link <?=($page_name=='author'?'active':'')?>" href="/author.php">Add author</a>
             </li>
             <li class="nav-item mx-2">
-                <a class="nav-link" href="/View/login.php?out=1">Exit</a>
+                <a class="nav-link" href="/login.php?out=1">Exit</a>
             </li>
         </ul>
     </div>

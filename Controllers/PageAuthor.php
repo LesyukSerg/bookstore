@@ -7,11 +7,14 @@
 
     class PageAuthor extends Page
     {
+        protected string $page_name = 'author';
+
         public function show()
         {
             $obj = new Authors();
             $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             $title = $id ? "Edit Author" : "Add Author";
+            $page_name = $this->page_name;
 
             if ($_POST) {
                 if ($id) {
