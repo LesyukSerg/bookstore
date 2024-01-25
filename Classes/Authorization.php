@@ -26,6 +26,7 @@
         {
             if ($login == $this->login && $pass == $this->password) {
                 $_SESSION['login'] = $login;
+                $_SESSION['likes'] = [];
                 header('Location: index.php');
             }
 
