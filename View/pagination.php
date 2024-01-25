@@ -3,9 +3,10 @@
         <ul class="pagination mx-auto">
             <?php
                 $u = parse_url($_SERVER['REQUEST_URI']);
-
-                $get = preg_replace("#page=\d+&?#", '', $u['query']);
-                $get = $get ? '&' . $get : '';
+                if ($u['query']) {
+                    $get = preg_replace("#page=\d+&?#", '', $u['query']);
+                    $get = $get ? '&' . $get : '';
+                }
 
                 for ($p = 1; $p <= $nav; $p++) {
                     $params[] = "page=$p";

@@ -1,10 +1,7 @@
 <?php
-
     use Classes\Utils;
-
     require view . 'header.php';
     require view . 'menu.php';
-
 ?>
     <div class="container pb-5">
         <div class="row">
