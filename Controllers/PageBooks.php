@@ -56,9 +56,10 @@
 
             $genres = $genres_obj->getList(1000);
             $authors = $authors_obj->getList(1000);
+            $years = $books_obj->getYears();
 
             $selected = [
-                'genres'   => $_SESSION['selected']['genres'] ?? [],
+                'genres'  => $_SESSION['selected']['genres'] ?? [],
                 'authors' => $_SESSION['selected']['authors'] ?? [],
                 'years'   => $_SESSION['selected']['years'] ?? [],
             ];

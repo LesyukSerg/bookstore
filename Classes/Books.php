@@ -8,29 +8,11 @@
         protected string $table = 'books';
         protected string $key = 'id';
 
-        public function getList($count = 10, $page = 1, $order_by = 'name', $direction = 'ASC'): array
+        public function getYears(): array
         {
+            $sql = "SELECT DISTINCT b.published_year year FROM books b ORDER BY published_year";
 
-            $genres_obj = new Genres();
-            $authors_obj = new Authors();
-
-            $items = [];
-            $page--;
-            $sql = "SELECT b.*, g.name genre FROM books b
-                        LEFT JOIN genres g ON g.id = b.genre_id
-                        GROUP BY b.title
-                        ORDER BY $order_by $direction
-                        LIMIT $count OFFSET " . ($page * $count);
-
-            $data = $this->db->fetchAll($sql);
-
-            foreach ($data as $one) {
-                $one['genres'] = $genres_obj->getItemsById($one['id']);
-                $one['authors'] = $authors_obj->getItemsById($one['id']);
-                $items[$one['id']] = $one;
-            }
-
-            return $items;
+            return $this->db->fetchAll($sql);
         }
 
         public function getListFilter($count = 10, $page = 1, $order_by = 'name', $direction = 'ASC'): array
@@ -73,21 +55,25 @@
             ];
 
             if (count($filter['genres'])) {
-                $in = implode(',', $filter['genres']);
-                $in = $this->db->escapeString($in);
-                $and[] = "( bg.genre_id IN ($in) OR b.genre_id IN ($in) )";
+                $in = $this->checkAllSelectedItem($filter['genres']);
+                if (strlen($in)) {
+                    $and[] = "( bg.genre_id IN ($in) OR b.genre_id IN ($in) )";
+                }
+
             }
 
             if (count($filter['authors'])) {
-                $in = implode(',', $filter['authors']);
-                $in = $this->db->escapeString($in);
-                $and[] = "ba.author_id IN ($in)";
+                $in = $this->checkAllSelectedItem($filter['authors']);
+                if (strlen($in)) {
+                    $and[] = "ba.author_id IN ($in)";
+                }
             }
 
             if (count($filter['years'])) {
-                $in = implode(',', $filter['years']);
-                $in = $this->db->escapeString($in);
-                $and[] = "b.published_year IN ($in)";
+                $in = $this->checkAllSelectedItem($filter['years']);
+                if (strlen($in)) {
+                    $and[] = "b.published_year IN ($in)";
+                }
             }
 
             if (count($and)) {
@@ -95,6 +81,16 @@
             }
 
             return '';
+        }
+
+        private function checkAllSelectedItem($filter): string
+        {
+            $items = [];
+            foreach ($filter as $one) {
+                $items[] = $this->db->escapeString($one);
+            }
+
+            return implode(',', $items);
         }
 
         public function add($data): int

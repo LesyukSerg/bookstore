@@ -4,22 +4,14 @@
         <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
             <div class="form-group mt-2">
                 <label for="yearFilter">Рік видання:</label>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="years[]" id="year2022" value="2022">
-                    <label class="custom-control-label" for="year2022">2022</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="year[]" id="year2021">
-                    <label class="custom-control-label" for="year2021">2021</label>
-                </div>
                 <?php
                     foreach ($years as $one) {
                         echo '
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="years['.$one['id'].']" value="'.$one['id'].'" id="genre'.$one['id'].'"
-                                '.(isset($selected['years'][$one['id']]) ? 'checked=checked' : '').'
+                            <input type="checkbox" class="custom-control-input" name="years['.$one['year'].']" value="'.$one['year'].'" id="genre'.$one['year'].'"
+                                '.(isset($selected['years'][$one['year']]) ? 'checked=checked' : '').'
                             >
-                            <label class="custom-control-label" for="genre'.$one['id'].'">' . $one['name'] . '</label>
+                            <label class="custom-control-label" for="genre'.$one['year'].'">' . $one['year'] . '</label>
                         </div>';
                     }
                 ?>
