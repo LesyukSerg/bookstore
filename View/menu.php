@@ -6,6 +6,9 @@
                 <a class="nav-link <?=($page_name=='books'?'active':'')?>" href="/index.php">Books</a>
             </li>
             <li class="nav-item mx-2">
+                <a class="nav-link <?=($page_name=='likes'?'active':'')?>" href="/likes.php">My likes</a>
+            </li>
+            <li class="nav-item mx-2">
                 <a class="nav-link <?=($page_name=='genre'?'active':'')?>" href="/genre.php">Add genre</a>
             </li>
             <li class="nav-item mx-2">

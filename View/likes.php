@@ -8,18 +8,9 @@
 ?>
     <div class="container pb-5">
         <div class="row">
-            <div class="col-md-3">
-                <?php require view . 'filter.php' ?>
-            </div>
-
-            <div class="col-md-9">
-                <a href="/book.php" class="btn btn-success mb-3 float-end">Add Book</a>
+            <div class="col-md-12">
                 <h2><?= $title ?></h2>
                 <hr>
-
-                <div class="row">
-                    <?php require view . 'sort.php' ?>
-                </div>
 
                 <div class="card-deck pb-5">
                     <?php

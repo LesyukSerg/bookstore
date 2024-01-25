@@ -8,6 +8,19 @@
         protected string $table = 'books';
         protected string $key = 'id';
 
+        public function like($id): bool
+        {
+            $id = (int)$id;
+
+            if (isset($_SESSION['likes'][$id])) {
+                unset($_SESSION['likes'][$id]);
+            } else {
+                $_SESSION['likes'][$id] = $id;
+            }
+
+            return isset($_SESSION['likes'][$id]);
+        }
+
         public function getYears(): array
         {
             $sql = "SELECT DISTINCT b.published_year year FROM books b ORDER BY published_year";
@@ -53,6 +66,16 @@
                 'authors' => $_SESSION['selected']['authors'] ?? [],
                 'years'   => $_SESSION['selected']['years'] ?? [],
             ];
+
+            if ($_SERVER['SCRIPT_NAME'] == '/likes.php') {
+                $likes = $_SESSION['likes'];
+                if (count($_SESSION['likes'])) {
+                    $in = $this->checkAllSelectedItem($likes);
+                    if (strlen($in)) {
+                        $and[] = "b.id IN ($in)";
+                    }
+                }
+            }
 
             if (count($filter['genres'])) {
                 $in = $this->checkAllSelectedItem($filter['genres']);
@@ -189,4 +212,16 @@
             return false;
         }
 
+        public function count(): int
+        {
+            $and = $this->generateAnd();
+
+            $sql = "SELECT COUNT(b.id) ids FROM books b
+                        LEFT JOIN genres g ON g.id = b.genre_id
+                        LEFT JOIN books_authors ba on b.id = ba.book_id 
+                        LEFT JOIN books_genres bg on b.id = bg.book_id         
+                        WHERE 1 $and";
+
+            return $this->db->fetchRow($sql)['ids'];
+        }
     }
