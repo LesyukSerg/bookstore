@@ -76,4 +76,25 @@
 
             return $this->db->fetchRow($sql)['ids'];
         }
+
+        public function getItemsById($book_id, $middle_table): array
+        {
+            $items = [];
+            if ($middle_table) {
+                $book_id = (int)$book_id;
+
+                $sql = "SELECT a.* FROM authors a
+                        LEFT JOIN books_authors ba on ba.author_id = a.id
+                        WHERE ba.book_id = $book_id 
+                        ORDER BY a.name";
+
+                $data = $this->db->fetchAll($sql);
+
+                foreach ($data as $one) {
+                    $items[$one['id']] = $one;
+                }
+            }
+
+            return $items;
+        }
     }
