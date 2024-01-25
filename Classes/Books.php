@@ -32,6 +32,24 @@
             return $items;
         }
 
+        public function add($data): int
+        {
+            $authors = $data['authors'];
+            $other_genre_id = $data['other_genre_id'];
+
+            unset($data['authors'], $data['other_genre_id']);
+            $id = parent::add($data);
+
+            if ($id) {
+                $this->setAuthors($id, $authors);
+                $this->setGenres($id, $other_genre_id);
+
+                return $id;
+            }
+
+            return 0;
+        }
+
         public function edit($id, $data): bool
         {
             if ($this->delAuthors($id)) {
@@ -48,17 +66,6 @@
             return 1;
         }
 
-        private function delAuthors($id): bool
-        {
-            if ($id) {
-                $sql = "DELETE FROM books_authors WHERE `book_id` = $id";
-
-                return $this->db->query($sql);
-            }
-
-            return false;
-        }
-
         private function setAuthors($book_id, $authors): bool
         {
             if ($book_id) {
@@ -73,17 +80,6 @@
                     $sql = "INSERT INTO books_authors (book_id, author_id) VALUES " . implode(',', $values);
                     return $this->db->query($sql);
                 }
-            }
-
-            return false;
-        }
-
-        private function delGenres($id): bool
-        {
-            if ($id) {
-                $sql = "DELETE FROM books_genres WHERE `book_id` = $id";
-
-                return $this->db->query($sql);
             }
 
             return false;
@@ -109,4 +105,28 @@
 
             return false;
         }
+
+        private function delAuthors($id): bool
+        {
+            if ($id) {
+                $sql = "DELETE FROM books_authors WHERE `book_id` = $id";
+
+                return $this->db->query($sql);
+            }
+
+            return false;
+        }
+
+        private function delGenres($id): bool
+        {
+            if ($id) {
+                $sql = "DELETE FROM books_genres WHERE `book_id` = $id";
+
+                return $this->db->query($sql);
+            }
+
+            return false;
+        }
+
+
     }

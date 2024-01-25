@@ -33,6 +33,8 @@
                         'title'          => $_POST['title'],
                         'published_year' => $_POST['published_year'],
                         'genre_id'       => $_POST['genre_id'],
+                        'authors'        => $_POST['author_id'],
+                        'other_genre_id' => $_POST['other_genre_id']
                     ]);
                     $title = "Add another Book";
                 }
