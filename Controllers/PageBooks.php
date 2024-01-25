@@ -15,7 +15,18 @@
         public function show()
         {
             $books_obj = new Books();
+
             $books_list = $books_obj->getList($this->items_on_page, $this->page, 'title');
+
+            foreach ($books_list as &$book) {
+                $genres = $authors = [];
+                foreach ($book['authors'] as $one) $authors[] = $one['name'];
+                foreach ($book['genres'] as $one) $genres[] = $one['name'];
+
+                $book['authors'] = $authors;
+                $book['genres'] = $genres;
+            }
+
             $count = $books_obj->count();
 
             $title = $this->title;
@@ -25,5 +36,10 @@
             $nav = ceil($count / $this->items_on_page);
 
             require view . '/books.php';
+        }
+
+        public function getAuthorsList($books_list)
+        {
+
         }
     }
