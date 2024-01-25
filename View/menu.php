@@ -6,7 +6,10 @@
                 <a class="nav-link <?=($page_name=='books'?'active':'')?>" href="/index.php">Books</a>
             </li>
             <li class="nav-item mx-2">
-
+                <a class="nav-link" href="/genre.php">Add genre</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link" href="/author.php">Add author</a>
             </li>
             <li class="nav-item mx-2">
                 <a class="nav-link" href="/View/login.php?out=1">Exit</a>
