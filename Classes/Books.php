@@ -41,6 +41,7 @@
                         LEFT JOIN books_authors ba on b.id = ba.book_id 
                         LEFT JOIN books_genres bg on b.id = bg.book_id         
                         WHERE 1 $and
+                        GROUP BY b.title
                         ORDER BY $order_by $direction
                         LIMIT $count OFFSET " . ($page * $count);
 
@@ -69,11 +70,13 @@
 
             if ($_SERVER['SCRIPT_NAME'] == '/likes.php') {
                 $likes = $_SESSION['likes'];
-                if (count($_SESSION['likes'])) {
+                if (count($likes)) {
                     $in = $this->checkAllSelectedItem($likes);
                     if (strlen($in)) {
                         $and[] = "b.id IN ($in)";
                     }
+                } else {
+                    $and[] = "b.id IN (0)";
                 }
             }
 
@@ -216,12 +219,13 @@
         {
             $and = $this->generateAnd();
 
-            $sql = "SELECT COUNT(b.id) ids FROM books b
+            $sql = "SELECT DISTINCT b.id FROM books b
                         LEFT JOIN genres g ON g.id = b.genre_id
                         LEFT JOIN books_authors ba on b.id = ba.book_id 
                         LEFT JOIN books_genres bg on b.id = bg.book_id         
                         WHERE 1 $and";
+            $result = $this->db->query($sql);
 
-            return $this->db->fetchRow($sql)['ids'];
+            return $result->num_rows;
         }
     }
