@@ -12,7 +12,7 @@
                 <?php require view . 'filter.php' ?>
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-9 mt-3">
                 <a href="/book.php" class="btn btn-success mb-3 float-end">Add Book</a>
                 <h2><?= $title ?></h2>
                 <hr>

@@ -1,7 +1,11 @@
 <div class="card-deck pt-2">
     <div class="card px-4 py-3">
         <h4>Filter</h4>
-        <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
+        <form action="<?= $_SERVER['SCRIPT_NAME'] ?>" method="post">
+            <div class="form-group mt-2">
+                <button type="submit" name="reset" value="1" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary float-end">Apply Filter</button>
+            </div>
             <div class="form-group mt-2">
                 <label for="yearFilter">Рік видання:</label>
                 <?php
@@ -45,7 +49,7 @@
 
             <div class="form-group mt-2">
                 <button type="submit" name="reset" value="1" class="btn btn-secondary">Reset</button>
-                <button type="submit" class="btn btn-primary">Apply Filter</button>
+                <button type="submit" class="btn btn-primary float-end">Apply Filter</button>
             </div>
         </form>
     </div>

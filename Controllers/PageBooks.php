@@ -12,7 +12,7 @@
         protected string $title = 'Books list';
         protected string $page_name = 'books';
         protected int $page = 1;
-        protected int $items_on_page = 8;
+        protected int $items_on_page = 5;
 
         private array $types = [
             'year' => 'published_year',
