@@ -33,6 +33,70 @@
             return $items;
         }
 
+        public function getListFilter($count = 10, $page = 1, $order_by = 'name', $direction = 'ASC'): array
+        {
+            $genres_obj = new Genres();
+            $authors_obj = new Authors();
+
+            $items = [];
+            $and = $this->generateAnd();
+            $page--;
+            $sql = "SELECT b.*, g.name genre FROM books b
+                        LEFT JOIN genres g ON g.id = b.genre_id
+                        LEFT JOIN books_authors ba on b.id = ba.book_id 
+                        LEFT JOIN books_genres bg on b.id = bg.book_id         
+                        WHERE 1 $and
+                        ORDER BY $order_by $direction
+                        LIMIT $count OFFSET " . ($page * $count);
+
+            $data = $this->db->fetchAll($sql);
+
+            foreach ($data as $one) {
+                $one['genres'] = $genres_obj->getItemsById($one['id']);
+                $one['genres'][] = ['name' => $one['genre']];
+
+                $one['authors'] = $authors_obj->getItemsById($one['id']);
+                $items[$one['id']] = $one;
+            }
+
+            return $items;
+        }
+
+        private function generateAnd(): string
+        {
+            $and = [];
+
+            $filter = [
+                'genres'  => $_SESSION['selected']['genres'] ?? [],
+                'authors' => $_SESSION['selected']['authors'] ?? [],
+                'years'   => $_SESSION['selected']['years'] ?? [],
+            ];
+
+            if (count($filter['genres'])) {
+                $in = implode(',', $filter['genres']);
+                $in = $this->db->escapeString($in);
+                $and[] = "( bg.genre_id IN ($in) OR b.genre_id IN ($in) )";
+            }
+
+            if (count($filter['authors'])) {
+                $in = implode(',', $filter['authors']);
+                $in = $this->db->escapeString($in);
+                $and[] = "ba.author_id IN ($in)";
+            }
+
+            if (count($filter['years'])) {
+                $in = implode(',', $filter['years']);
+                $in = $this->db->escapeString($in);
+                $and[] = "b.published_year IN ($in)";
+            }
+
+            if (count($and)) {
+                return 'AND ' . implode(' AND ', $and);
+            }
+
+            return '';
+        }
+
         public function add($data): int
         {
             $authors = $data['authors'];
@@ -49,22 +113,6 @@
             }
 
             return 0;
-        }
-
-        public function edit($id, $data): bool
-        {
-            if ($this->delAuthors($id)) {
-                $this->setAuthors($id, $data['authors']);
-            }
-
-            if ($this->delGenres($id)) {
-                $this->setGenres($id, $data['other_genre_id']);
-            }
-
-            unset($data['authors'], $data['other_genre_id']);
-            parent::edit($id, $data);
-
-            return 1;
         }
 
         private function setAuthors($book_id, $authors): bool
@@ -107,6 +155,22 @@
             return false;
         }
 
+        public function edit($id, $data): bool
+        {
+            if ($this->delAuthors($id)) {
+                $this->setAuthors($id, $data['authors']);
+            }
+
+            if ($this->delGenres($id)) {
+                $this->setGenres($id, $data['other_genre_id']);
+            }
+
+            unset($data['authors'], $data['other_genre_id']);
+            parent::edit($id, $data);
+
+            return 1;
+        }
+
         private function delAuthors($id): bool
         {
             if ($id) {
@@ -128,6 +192,5 @@
 
             return false;
         }
-
 
     }

@@ -2,7 +2,9 @@
 
     namespace Controllers;
 
+    use Classes\Authors;
     use Classes\Books;
+    use Classes\Genres;
 
 
     class PageBooks extends Page
@@ -20,11 +22,19 @@
 
         public function show()
         {
+            if ($_POST) {
+                $_SESSION['selected']['genres'] = $_POST['genres'];
+                $_SESSION['selected']['authors'] = $_POST['authors'];
+                $_SESSION['selected']['years'] = $_POST['years'];
+            }
+
             $books_obj = new Books();
+            $genres_obj = new Genres();
+            $authors_obj = new Authors();
 
             $type = $this->getType();
             $order = $this->getOrder();
-            $books_list = $books_obj->getList($this->items_on_page, $this->page, $type, $order);
+            $books_list = $books_obj->getListFilter($this->items_on_page, $this->page, $type, $order);
 
             foreach ($books_list as $id => $book) {
                 $genres = $authors = [];
@@ -32,7 +42,7 @@
                 foreach ($book['genres'] as $one) $genres[] = $one['name'];
 
                 $book['authors'] = $authors;
-                $book['genres'] = $genres;
+                $book['genres'] = array_unique($genres);
                 $books_list[$id] = $book;
             }
 
@@ -43,6 +53,15 @@
             $on_page = $this->items_on_page;
             $page = $this->page;
             $nav = ceil($count / $this->items_on_page);
+
+            $genres = $genres_obj->getList(1000);
+            $authors = $authors_obj->getList(1000);
+
+            $selected = [
+                'genres'   => $_SESSION['selected']['genres'] ?? [],
+                'authors' => $_SESSION['selected']['authors'] ?? [],
+                'years'   => $_SESSION['selected']['years'] ?? [],
+            ];
 
             require view . '/books.php';
         }

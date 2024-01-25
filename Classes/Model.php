@@ -61,10 +61,10 @@
             return $this->db->fetchRow($sql);
         }
 
-        public function getList($count = 10, $page = 1, $order_by = 'name'): array
+        public function getList($count = 10, $page = 1, $order_by = 'name', $direction = 'asc'): array
         {
             $page--;
-            $sql = "SELECT * FROM $this->table ORDER BY $order_by 
+            $sql = "SELECT * FROM $this->table ORDER BY $order_by $direction
                         LIMIT $count OFFSET " . ($page * $count);
 
             return $this->db->fetchAll($sql);
