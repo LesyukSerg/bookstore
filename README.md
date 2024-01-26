@@ -1,3 +1,7 @@
+login: admin
+
+pass: admin
+
 ##### **1.** You are tasked with creating a feature-rich web application for managing a list of books.
 The emphasis is on developing a robust back-end system, implementing advanced
 functionality, maintaining high security standards.
